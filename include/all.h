@@ -11,9 +11,6 @@ const int PRESENT = 0x1;
 const int WHITE   = 0x2;
 const int DAME    = 0x4;
 
-void printVec(vector <int>);
-void printMovVec(vector <int>);
-
 class Chip {
   public:
     int state;
@@ -58,3 +55,5 @@ void printVec(vector <int> x);
 void printMovVec(vector <int> x);
 void printMoveVariant(string from, string to);
 void printMoveVariants(int i, int j, Desk& d);
+void printMoveCounts(Desk & d);
+string prettyCoords(int, int);

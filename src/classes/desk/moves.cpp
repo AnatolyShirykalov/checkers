@@ -10,6 +10,7 @@ vector<MovesC> Desk::Moves(void) {
     for (j = i%2; j < 8; j+=2 ){
       if ((Get(i, j).state & WHITE) != my) continue;
       moves = Moves(i, j);
+      if (moves.moves.size() == 0) continue;
       mustKill = mustKill || moves.withKills;
       if (mustKill && moves.withKills) withKills.push_back(moves);
       if (!mustKill && !moves.withKills) ret.push_back(moves);

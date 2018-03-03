@@ -9,9 +9,9 @@ MovesC Desk::Moves(int i, int j) {
       for (idir = 1; idir > -2; idir -= 2) {
         for (jdir = 1; jdir > -2; jdir -= 2) {
           last = killed = 0; // чтобы ходить была дальше нельзя, нужно две фишки подряд, первая из которых чужая
-          for (k = 0; k < 7; k++) {
+          for (k = 1; k < 7; k++) {
             J = j + jdir * k;
-            I = i + jdir * k;
+            I = i + idir * k;
             if (I < 0 || J < 0 || I > 7 || J > 7) break;
             c = Get(I, J);
             if (!(c.state & PRESENT)) {
@@ -51,13 +51,12 @@ MovesC Desk::Moves(int i, int j) {
         }
       }
       for (I = i - 2; I < i + 3; I += 4) {
-        cout << I << endl;
         for (J = j - 2; J < j + 3; J += 4) {
           if (I<0 || J <0 || I > 7 || J > 7) continue;
           ii = (i + I)/2; jj = (j+J)/2;
           ss = Get(ii, jj).state;
-          if (!(ss & PRESENT) || (ss & WHITE) == (s & WHITE)) break;
-          if (Get(I, J).state & PRESENT) break;
+          if (!(ss & PRESENT) || (ss & WHITE) == (s & WHITE)) continue;
+          if (Get(I, J).state & PRESENT) continue;
           withKills.moves.push_back(8*I+J);
         }
       }

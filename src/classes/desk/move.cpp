@@ -3,6 +3,7 @@
 void Desk::Move(int i0, int j0, int i1, int j1) {
   int idir, jdir, I, J;
   int s = Get(i0, j0).state;
+  bool withKills = Moves(i0, j0).withKills;
   Set(i0, j0, 0);
   if (i0 - i1 > 1 || i1 - i0 > 1) {
     idir = i1 - i0 > 0 ? 1 : -1;
@@ -12,4 +13,6 @@ void Desk::Move(int i0, int j0, int i1, int j1) {
   Set(i1, j1, s);
   if (i1 == 0 && !(s & WHITE)) Set(i1, j1, s | DAME);
   if (i1 == 7 && (s & WHITE)) Set(i1, j1, s | DAME);
+  if (withKills && Moves(i1, j1).withKills) return;
+  whiteShouldMove = !whiteShouldMove;
 }

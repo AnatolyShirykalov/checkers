@@ -22,6 +22,12 @@ int main(int argc, char **argv){
       desk->Save("out.sav");
       delete desk;
       return 0;
+    case 2:
+      desk = new Desk("out.sav");
+      desk->Print();
+      printMoveCounts(*desk);
+      delete desk;
+      return 0;
     case 3:
       desk = new Desk("out.sav");
       printMoveVariants(getArg(argv[2]), getArg(argv[1]), *desk);

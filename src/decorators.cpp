@@ -29,6 +29,12 @@ void printMoveVariant(string from, string to) {
   }
 }
 
+string prettyCoords(int i, int j) {
+  stringstream ss;
+  ss <<(char)(((char)(j)) + 'a') << i+1;
+  return ss.str();
+}
+
 void printMoveVariants(int i, int j, Desk& d) {
   Desk d1;
   MovesC moves;
@@ -40,9 +46,20 @@ void printMoveVariants(int i, int j, Desk& d) {
     I = move / 8;
     J = move % 8;
     cout << "                 Move to "
-         <<(char)(((char)(J)) + 'a') << I+1<< ":" << endl;
+         << prettyCoords(I, J) << ":" << endl;
     d1 = d;
     d1.Move(i, j, I, J);
     printMoveVariant(d.SPrint(), d1.SPrint());
+  }
+}
+
+void printMoveCounts(Desk &d) {
+  vector <MovesC> movesV;
+  MovesC moves;
+  unsigned int i;
+  movesV = d.Moves();
+  for (i = 0; i < movesV.size(); i++) {
+    moves = movesV[i];
+    cout << prettyCoords(moves.i, moves.j) << ": " << moves.moves.size() << endl;
   }
 }
