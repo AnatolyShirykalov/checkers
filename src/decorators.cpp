@@ -37,9 +37,17 @@ string prettyCoords(int i, int j) {
 
 void printMoveVariants(int i, int j, Desk& d) {
   Desk d1;
+  vector <MovesC> movesV;
   MovesC moves;
   int I, J;
-  moves = d.Moves(i, j);
+  unsigned int k;
+  movesV = d.Moves();
+  for (k = 0; k < movesV.size(); k++) {
+    if (movesV[k].i == i && movesV[k].j == j) {
+      moves = movesV[k];
+      break;
+    }
+  }
   cout << "Current state:" << endl;
   if (moves.moves.size() == 0) cout << "Cannot move" << endl;
   for( int move : moves.moves) {
