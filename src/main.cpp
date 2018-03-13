@@ -13,8 +13,19 @@ void usage(string pname) {
   cout << "Move from c3 to d4:\n\t" << pname << " c 3 e 4" << endl;
 }
 
+int dig(){
+  Desk desk("dames3-1");
+  Solver solver(desk);
+  cout << "Dig test command started" << endl;
+  solver.Dig(2);
+  cout << "Dig test command finished" << endl;
+  cout<< solver.SPrint() << endl;
+  return 0;
+}
+
 int main(int argc, char **argv){
   Desk * desk;
+
   switch(argc) {
     case 1:
       desk = new Desk();
@@ -23,6 +34,7 @@ int main(int argc, char **argv){
       delete desk;
       return 0;
     case 2:
+      if (string(argv[1]) == "dig") return dig();
       desk = new Desk("out.sav");
       desk->Print();
       printMoveCounts(*desk);

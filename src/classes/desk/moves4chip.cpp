@@ -9,7 +9,7 @@ MovesC Desk::Moves(int i, int j) {
       for (idir = 1; idir > -2; idir -= 2) {
         for (jdir = 1; jdir > -2; jdir -= 2) {
           last = killed = 0; // чтобы ходить была дальше нельзя, нужно две фишки подряд, первая из которых чужая
-          for (k = 1; k < 7; k++) {
+          for (k = 1; k < 8; k++) {
             J = j + jdir * k;
             I = i + idir * k;
             if (I < 0 || J < 0 || I > 7 || J > 7) break;

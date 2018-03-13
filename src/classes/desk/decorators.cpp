@@ -4,6 +4,12 @@ void Desk::Print(void){
   cout << SPrint();
 }
 
+/*
+ * Мотивация использовать ostringstream в том,
+ * чтобы легче было добавлять к итоговой строке
+ * числа, не указывая явно в каком формате их добавить.
+ * Вместо sprintf(s, "%i", i) пишем oss << i
+ */
 string Desk::SPrint(void) {
   ostringstream oss;
   oss << "  a b c d e f g h " << endl;

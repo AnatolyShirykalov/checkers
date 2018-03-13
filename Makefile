@@ -6,10 +6,11 @@ OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/apps
 TARGET   := program
 INCLUDE  := -Iinclude/
-SRC      := 												\
-	$(wildcard src/*.cpp) 						\
-	$(wildcard src/classes/*.cpp) 		\
-	$(wildcard src/classes/desk/*.cpp)
+SRC      := 													\
+	$(wildcard src/*.cpp) 							\
+	$(wildcard src/classes/*.cpp) 			\
+	$(wildcard src/classes/desk/*.cpp)	\
+	$(wildcard src/classes/solver/*.cpp)
 
 OBJECTS := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

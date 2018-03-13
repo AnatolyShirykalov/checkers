@@ -16,8 +16,9 @@ void printMovVec(vector <int> x) {
 }
 
 
-void printMoveVariant(string from, string to) {
+string printMoveVariant(string from, string to) {
   stringstream ss_from(from), ss_to(to);
+  ostringstream oss;
   string s_from, s_to;
   const string empty = "         ";
   const string witharrow = "    \u2192    ";
@@ -25,8 +26,9 @@ void printMoveVariant(string from, string to) {
   for (i=0; i<9; i++) {
     getline(ss_from, s_from, '\n');
     getline(ss_to, s_to, '\n');
-    cout << s_from << (i==4 ? witharrow : empty) << s_to << endl;
+    oss << s_from << (i==4 ? witharrow : empty) << s_to << endl;
   }
+  return oss.str();
 }
 
 string prettyCoords(int i, int j) {
@@ -57,7 +59,7 @@ void printMoveVariants(int i, int j, Desk& d) {
          << prettyCoords(I, J) << ":" << endl;
     d1 = d;
     d1.Move(i, j, I, J);
-    printMoveVariant(d.SPrint(), d1.SPrint());
+    cout << printMoveVariant(d.SPrint(), d1.SPrint());
   }
 }
 

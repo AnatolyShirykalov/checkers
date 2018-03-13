@@ -8,6 +8,14 @@ Chip::Chip(int newState){
   state = newState;
 }
 
+bool Chip::operator==(const Chip &c) {
+  return state == c.state;
+}
+
+bool Chip::operator!=(const Chip &c) {
+  return state != c.state;
+}
+
 string Chip::Print() {
   switch(state) {
     case PRESENT | WHITE | DAME: return "\u26c1";
