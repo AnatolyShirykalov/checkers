@@ -1,6 +1,15 @@
 #include "all.h"
 
-Solver::DeskRecord Solver::SolverNode::deskRecord(){
+bool Solver::SolverNode::ShouldSkip(){
+  Desk desk = deskRecord().desk;
+  int cs = 0;
+  for (Chip chip : desk.cell) {
+    if(chip.state & PRESENT) cs++;
+  }
+  return same != NULL || cs < 4;
+}
+
+Solver::DeskRecord& Solver::SolverNode::deskRecord(){
   if(solver == NULL) throw "solver null";
   if(deskRecordIndex>= solver->deskRecords.size()) throw "kaka";
   return solver->deskRecords[deskRecordIndex];

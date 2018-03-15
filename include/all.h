@@ -39,12 +39,12 @@ class MovesC {
 };
 
 class Desk {
-    Chip cell[64];
     bool whiteShouldMove;
 
     bool eqShift (const Desk &s);
 
   public:
+    Chip cell[64];
     Desk();
     Desk(string fn);
     Desk(SimpleDesk sd);
@@ -69,6 +69,7 @@ class Solver {
   class SolverNode;
   class DeskRecord {
     public:
+      bool terminate = false;
       Desk desk;
       vector <SolverNode*> recorded;
       DeskRecord(Desk);
@@ -80,7 +81,7 @@ class Solver {
     Solver *solver;
     unsigned int deskRecordIndex;
     public:
-      DeskRecord deskRecord();
+      DeskRecord& deskRecord();
       SolverNode *same;
       SolverNode *parent;
       vector<SolverNode*> children;
@@ -89,6 +90,7 @@ class Solver {
       SolverNode(Solver *, unsigned int);
       ~SolverNode();
       string SPrint();
+      bool ShouldSkip();
   };
   unsigned int findOrCreateDeskRecord(Desk &desk);
   vector<SolverNode*> nodes;

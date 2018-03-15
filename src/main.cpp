@@ -16,10 +16,8 @@ void usage(string pname) {
 int dig(){
   Desk desk("dames3-1");
   Solver solver(desk);
-  cout << "Dig test command started" << endl;
-  solver.Dig(2);
-  cout << "Dig test command finished" << endl;
-  cout<< solver.SPrint() << endl;
+  solver.Dig(6);
+  //cout<< solver.SPrint() << endl;
   return 0;
 }
 

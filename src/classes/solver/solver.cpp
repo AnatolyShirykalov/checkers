@@ -20,6 +20,7 @@ vector<Desk> Solver::Level(unsigned int level){
 Solver::Solver(Desk desk) {
   deskRecords.push_back(DeskRecord(desk));
   root = SolverNode(this, 0);
+  nodes.push_back(&root);
   levels = 1;
 }
 
@@ -64,6 +65,7 @@ unsigned int Solver::findOrCreateDeskRecord(Desk &desk) {
   deskRecords.push_back(DeskRecord(desk));
   return i;
 }
+
 /*
  * Добавить доступные ходы для узла parent в качестве
  * его children в дерево. Если есть новые состояния (deskRecords), то
@@ -72,37 +74,43 @@ unsigned int Solver::findOrCreateDeskRecord(Desk &desk) {
 void Solver::AddMove(MovesC moves, SolverNode *parent) {
   Desk desk;
   SolverNode *sn;
-  unsigned int dri;
-  LOG_WHERE_AM_I;
-  cout << moves.i << ' ' << moves.j << endl;
+  unsigned int dri, size;
   for (int m : moves.moves) {
     desk = parent->deskRecord().desk;
     desk.Move(moves.i, moves.j, m / 8, m % 8);
+    size = deskRecords.size();
     dri = findOrCreateDeskRecord(desk);
     sn = new SolverNode(this, dri);
     sn->parent = parent;
+    nodes.push_back(sn);
     parent->children.push_back(sn);
+    sn->deskRecord().recorded.push_back(sn);
+    if (deskRecords.size() == size) sn->same = sn->deskRecord().recorded[0];
   }
 }
 
 void Solver::Dig(unsigned int level) {
-  unsigned int i, j;
+  unsigned int i, j, skips;
   Desk desk;
   vector <SolverNode*> parents;
   vector <MovesC> moves;
   if (levels != 1) throw "Cannot dig two times yet";
   parents.push_back(&root);
   for (i = 0; i < level; i++) {
+    skips = 0;
     for (j = 0; j < parents.size(); j++) {
+      if (parents[j]->ShouldSkip()) {
+        skips++;
+        continue;
+      }
       desk = parents[j]->deskRecord().desk;
       moves = desk.Moves();
       for (MovesC move : moves) {
-        cout << endl;
-        LOG_WHERE_AM_I;
-        cout << move.i << ' ' << move.j << endl;
         AddMove(move, parents[j]);
       }
     }
+    cout << "skips: " << skips << endl;
+    cout << Stats() << endl;
     levels++;
     parents = LevelNodes(i+1);
   }
@@ -126,6 +134,8 @@ string Solver::SPrint() {
 string Solver::Stats() {
   ostringstream oss;
   oss << "Stats:" << endl;
+  oss << levels << " level" << endl;
   oss << deskRecords.size() << " desk records" << endl;
+  oss << nodes.size() << " nodes" << endl;
   return oss.str();
 }
