@@ -75,13 +75,22 @@ void Solver::AddMove(MovesC moves, SolverNode *parent) {
   Desk desk;
   SolverNode *sn;
   unsigned int dri, size;
+  bool white;
   for (int m : moves.moves) {
     desk = parent->deskRecord().desk;
+    white = desk.whiteShouldMove;
     desk.Move(moves.i, moves.j, m / 8, m % 8);
     size = deskRecords.size();
     dri = findOrCreateDeskRecord(desk);
     sn = new SolverNode(this, dri);
     sn->parent = parent;
+    sn->whiteMoveIndeces = parent->whiteMoveIndeces;
+    sn->blackMoveIndeces = parent->blackMoveIndeces;
+    if (white) {
+      sn->whiteMoveIndeces.push_back((moves.i * 8 + moves.j) * 64 + m);
+    } else {
+      sn->blackMoveIndeces.push_back((moves.i * 8 + moves.j) * 64 + m);
+    }
     nodes.push_back(sn);
     parent->children.push_back(sn);
     sn->deskRecord().recorded.push_back(sn);
@@ -92,13 +101,16 @@ void Solver::AddMove(MovesC moves, SolverNode *parent) {
 void Solver::Dig(unsigned int level) {
   unsigned int i, j, skips;
   Desk desk;
+  boost::progress_display *progressBar=NULL;
   vector <SolverNode*> parents;
   vector <MovesC> moves;
   if (levels != 1) throw "Cannot dig two times yet";
   parents.push_back(&root);
   for (i = 0; i < level; i++) {
     skips = 0;
+    progressBar = new boost::progress_display(parents.size());
     for (j = 0; j < parents.size(); j++) {
+      ++(*progressBar);
       if (parents[j]->ShouldSkip()) {
         skips++;
         continue;
@@ -109,6 +121,7 @@ void Solver::Dig(unsigned int level) {
         AddMove(move, parents[j]);
       }
     }
+    delete progressBar;
     cout << "skips: " << skips << endl;
     cout << Stats() << endl;
     levels++;

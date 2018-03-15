@@ -7,6 +7,7 @@
 #include <vector>
 #include <set>
 
+#include <boost/progress.hpp>
 
 using namespace std;
 
@@ -39,11 +40,11 @@ class MovesC {
 };
 
 class Desk {
-    bool whiteShouldMove;
 
     bool eqShift (const Desk &s);
 
   public:
+    bool whiteShouldMove;
     Chip cell[64];
     Desk();
     Desk(string fn);
@@ -63,6 +64,7 @@ class Desk {
 
     void Print(void);
     string SPrint(void);
+    int GameOver();
 };
 
 class Solver {
@@ -81,6 +83,8 @@ class Solver {
     Solver *solver;
     unsigned int deskRecordIndex;
     public:
+      vector <unsigned int> whiteMoveIndeces;
+      vector <unsigned int> blackMoveIndeces;
       DeskRecord& deskRecord();
       SolverNode *same;
       SolverNode *parent;

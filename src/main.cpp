@@ -16,7 +16,7 @@ void usage(string pname) {
 int dig(){
   Desk desk("dames3-1");
   Solver solver(desk);
-  solver.Dig(6);
+  solver.Dig(30);
   //cout<< solver.SPrint() << endl;
   return 0;
 }
