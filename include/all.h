@@ -83,6 +83,8 @@ class Solver {
     Solver *solver;
     unsigned int deskRecordIndex;
     public:
+      void Save(string);
+      void Save(ofstream &);
       vector <unsigned int> whiteMoveIndeces;
       vector <unsigned int> blackMoveIndeces;
       DeskRecord& deskRecord();

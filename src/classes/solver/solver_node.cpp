@@ -45,3 +45,21 @@ string Solver::SolverNode::SPrint() {
   else oss << deskRecord().desk.SPrint() << endl;
   return oss.str();
 }
+
+void Solver::SolverNode::Save(string fn) {
+  ofstream f;
+  f.open(fn);
+  Save(f);
+  f.close();
+}
+
+void Solver::SolverNode::Save(ofstream &f) {
+  f << this << " " << parent << " " << deskRecord().desk.GaveOver() << " " << deskRecord().desk.whiteShouldMove;
+  for (int i = 0; i< 64; i++) {
+    f << " " << deskRecord().desk.cell[i].state;
+  }
+  f << endl;
+  for (SolverNode* snp : children) {
+    snp->Save(f);
+  }
+}

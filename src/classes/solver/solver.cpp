@@ -123,6 +123,7 @@ void Solver::Dig(unsigned int level) {
     }
     delete progressBar;
     cout << "skips: " << skips << endl;
+    root.Save("nodes");
     cout << Stats() << endl;
     levels++;
     parents = LevelNodes(i+1);
